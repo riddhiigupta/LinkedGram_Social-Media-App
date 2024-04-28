@@ -38,7 +38,7 @@ public class NewsFeed {
         return null;
     }
 
-    public void viewNewsFeed() {
+    public void viewNewsFeed() throws PostIncompleteException {
         for (Post post : postList) {
             System.out.println(post);
         }
