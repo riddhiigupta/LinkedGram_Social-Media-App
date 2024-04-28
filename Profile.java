@@ -199,4 +199,9 @@ public class Profile implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    @Override
+    public String toString() {
+        return "About: " + about + "\nExperience: " + experience.toString() + "\nEducation: " + education + "\nAwards: " + awards + "\nSkills: " + skills + "\nStatus: " + status;
+    }
 }
