@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ClientGUI {
@@ -137,10 +138,9 @@ public class ClientGUI {
         out.println(password);
         try {
             String response = in.readLine();
+            JOptionPane.showMessageDialog(frame, response); // Show the server's response in a dialog
             if ("Registration successful!".equals(response)) {
-                JOptionPane.showMessageDialog(frame, "Registration successful!");
-            } else {
-                JOptionPane.showMessageDialog(frame, "Registration failed: " + response);
+                createProfileGUI(); // Call createProfileGUI method after successful registration
             }
         } catch (IOException ioException) {
             JOptionPane.showMessageDialog(frame, "Error registering: " + ioException.getMessage());
@@ -331,12 +331,87 @@ public class ClientGUI {
         }
     }
 
+    private void createProfileGUI() {
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        JTextField usernameField = new JTextField();
+        JTextField aboutField = new JTextField();
+        JTextField experienceField = new JTextField();
+        JTextField educationField = new JTextField();
+        JTextField awardsField = new JTextField();
+        JTextField skillsField = new JTextField();
+        JTextField statusField = new JTextField();
 
-    private void searchUser() {
-        // Implementation to search user
-        JOptionPane.showMessageDialog(frame, "Searching user...");
+        panel.add(new JLabel("Username(same as the one you just entered): "));
+        panel.add(usernameField);
+        panel.add(new JLabel("About:"));
+        panel.add(aboutField);
+        panel.add(new JLabel("Experience:"));
+        panel.add(experienceField);
+        panel.add(new JLabel("Education:"));
+        panel.add(educationField);
+        panel.add(new JLabel("Awards:"));
+        panel.add(awardsField);
+        panel.add(new JLabel("Skills:"));
+        panel.add(skillsField);
+        panel.add(new JLabel("Status:"));
+        panel.add(statusField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Create Profile",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            out.println("CREATE_PROFILE");
+            out.println(usernameField.getText());
+            out.println(aboutField.getText());
+            out.println(experienceField.getText());
+            out.println(educationField.getText());
+            out.println(awardsField.getText());
+            out.println(skillsField.getText());
+            out.println(statusField.getText());
+
+            try {
+                String response = in.readLine();
+                JOptionPane.showMessageDialog(frame, response); // Show the server's response in a dialog
+                if ("Profile created successfully!".equals(response)) {
+                    // After creating the profile, automatically log in twice
+                    out.println("LOGIN");
+                    out.println(usernameField.getText());
+                    out.println(passwordField.getPassword());
+                }
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(frame, "Error creating profile: " + ioException.getMessage());
+            }
+        }
     }
 
+    private void searchUser() {
+        String usernameToSearch = JOptionPane.showInputDialog(frame, "Enter username to search:");
+        if (usernameToSearch != null && !usernameToSearch.isEmpty()) {
+            out.println("SEARCH_USER");
+            out.println(usernameToSearch);
+            try {
+                String response = in.readLine();
+                if (response.startsWith("User profile not found")) {
+                    JOptionPane.showMessageDialog(frame, response);
+                } else {
+                    // Split the response into different parts
+                    String[] profileParts = response.split("\n");
+                    System.out.println(Arrays.toString(profileParts));
+                    StringBuilder profileInfo = new StringBuilder();
+                    profileInfo.append("Username: ").append(profileParts[0]).append("\n");
+                    profileInfo.append("About: ").append(profileParts[1]).append("\n");
+                    profileInfo.append("Experience: ").append(profileParts[2]).append("\n");
+                    profileInfo.append("Education: ").append(profileParts[3]).append("\n");
+                    profileInfo.append("Awards: ").append(profileParts[4]).append("\n");
+                    profileInfo.append("Skills: ").append(profileParts[5]).append("\n");
+                    profileInfo.append("Status: ").append(profileParts[6]).append("\n");
+                    JOptionPane.showMessageDialog(frame, "User profile for " + usernameToSearch + ":\n" + profileInfo.toString());
+                }
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(frame, "Error searching user: " + ioException.getMessage());
+            }
+        }
+    }
     private void upvotePost() {
         // Implementation to upvote post
         JOptionPane.showMessageDialog(frame, "Upvoting post...");

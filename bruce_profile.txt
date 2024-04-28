@@ -1,0 +1,6 @@
+About: I am bruce
+Experience: Hi
+Education: Purdue
+Awards: N/A
+Skills: sleep
+Status: good

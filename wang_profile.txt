@@ -1,0 +1,6 @@
+About: 1
+Experience: 1
+Education: 1
+Awards: 1
+Skills: 1
+Status: 1
