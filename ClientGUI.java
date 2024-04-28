@@ -6,14 +6,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientGUI {
-    private JFrame frame;
+    JFrame frame;
     private JTextField usernameField;
     private JPasswordField passwordField;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
+    private static String loggedInUser;
 
     public ClientGUI() {
         initializeUI();
@@ -111,6 +113,7 @@ public class ClientGUI {
         String password = new String(passwordField.getPassword());
         out.println("LOGIN");
         out.println(username);
+        loggedInUser = username;
         out.println(password);
         try {
             String response = in.readLine();
@@ -158,7 +161,7 @@ public class ClientGUI {
 
         JButton createPostButton = new JButton("Create Post");
         createPostButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Set alignment to center
-        createPostButton.addActionListener(e -> createPost());
+        createPostButton.addActionListener(e -> createPostGUI());
         socialMediaPanel.add(createPostButton);
 
         JButton commentOnPostButton = new JButton("Comment on Post");
@@ -191,7 +194,7 @@ public class ClientGUI {
     }
 
 
-    private void createPost() {
+    private void createPostGUI() {
         // Clear the existing UI and set up a new one for creating a post
         frame.getContentPane().removeAll();
         JPanel createPostPanel = new JPanel();
@@ -222,10 +225,17 @@ public class ClientGUI {
             String title = titleField.getText();
             String content = contentField.getText();
             String imageURL = imageURLField.getText();
+            Post newPost;
+            try {
+                newPost = new Post(title, content, loggedInUser, false, imageURL, 0, 0);
+            } catch (PostIncompleteException ex) {
+                throw new RuntimeException(ex);
+            }
             out.println("CREATE_POST");
-            out.println(title);
-            out.println(content);
-            out.println(imageURL);
+            out.println(newPost.getTitle());
+            out.println(newPost.getContent());
+            out.println(newPost.getAuthor());
+            out.println(newPost.getImageURL());
             try {
                 String response = in.readLine();
                 if ("Post created successfully!".equals(response)) {
@@ -270,10 +280,73 @@ public class ClientGUI {
     }
 
     private void viewNewsFeed() {
-        // Implementation to view news feed
-        JOptionPane.showMessageDialog(frame, "Viewing news feed...");
-    }
+        System.out.println("1");
+        // Clear the existing UI and set up a new one for viewing the news feed
+        JFrame newsFeedFrame = new JFrame("News Feed");
+        newsFeedFrame.setSize(500, 400); // Adjust the size of the frame
+        frame.getContentPane().removeAll();
+        JPanel newsFeedPanel = new JPanel();
+        newsFeedPanel.setLayout(new BoxLayout(newsFeedPanel, BoxLayout.Y_AXIS)); // Set layout to BoxLayout
+        frame.add(newsFeedPanel);
 
+        System.out.println("2");
+
+        out.println("VIEW_NEWS_FEED"); // Send request to the server to retrieve the news feed
+
+        try {
+            String response;
+            while ((response = in.readLine()) != null) {
+                // Assume each post is sent as a series of lines: title, content, author
+                String title = response;
+                String content = in.readLine();
+                String author = in.readLine();
+                String imageURL = in.readLine();
+                String upvotes = in.readLine();
+                String downvotes = in.readLine();
+                System.out.println("Title: " + title);
+                System.out.println("Content: " + content);
+                System.out.println("Author: " + author);
+                System.out.println("Image URL: " + imageURL);
+                System.out.println("Upvotes: " + upvotes);
+                System.out.println("Downvotes: " + downvotes);
+
+                // Create a panel for the post and add it to the news feed panel
+                JPanel postPanel = new JPanel();
+                postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+                postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
+                postPanel.add(new JLabel("Content: " + content));
+
+                if (!imageURL.isEmpty()) {
+                    postPanel.add(new JLabel("Image URL: " + imageURL));
+                }
+                postPanel.add(new JLabel("Upvotes: " + upvotes));
+                postPanel.add(new JLabel("Downvotes: " + downvotes));
+
+                newsFeedPanel.add(postPanel);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(frame, "Error retrieving news feed: " + e.getMessage());
+        }
+        System.out.println("3");
+
+        // Add a "Back" button to return to the social media menu
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> showSocialMediaMenu());
+        newsFeedPanel.add(backButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+    
+    public void updateNewsFeed(String postDetails) {
+
+        JLabel label = new JLabel(postDetails);
+        JPanel panel = new JPanel();
+        panel.add(label);
+        frame.getContentPane().add(panel);
+        frame.revalidate();
+        frame.repaint();
+    }
     public static void main(String[] args) {
         new ClientGUI();
     }

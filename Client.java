@@ -12,7 +12,7 @@ public class Client {
     private static PrintWriter out;
     private static BufferedReader in;
     private static Scanner scanner;
-    private static String loggedInUser;
+    static String loggedInUser;
 
     public Client() {
     }
