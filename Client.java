@@ -1,8 +1,6 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
@@ -199,8 +197,29 @@ public class Client {
     }
 
 
-    private static void commentOnPost() {
+
+    private static void commentOnPost() throws IOException, PostIncompleteException {
+
     }
+
+    private static void handleLogout() {
+        // Logging out the user
+        if (loggedInUser == null) {
+            System.out.println("No user is currently logged in.");
+        } else {
+            // Close the resources
+            try {
+                socket.close();
+                out.close();
+                in.close();
+                System.out.println("User " + loggedInUser + " logged out successfully.");
+            } catch (IOException e) {
+                System.out.println("Failed to close resources for " + loggedInUser + ": " + e.getMessage());
+            }
+            loggedInUser = null; // Clear the user session information
+        }
+    }
+
 
     // Inside handleSocialMediaChoice("2") method
     private static void createPost() throws IOException, PostIncompleteException {

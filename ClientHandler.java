@@ -78,6 +78,8 @@ public class ClientHandler implements Runnable {
             case "CREATE_PROFILE":
                 String username = bufferedReader.readLine(); // Read the username
                 return handleCreateProfile(username);
+            case "LOGOUT":
+                return handleLogout();
             default:
                 return "Unrecognized request: " + request;
         }
@@ -115,6 +117,9 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public String handleLogout() {
+        return "Logout successful!";
+    }
 
     private String handleViewNewsFeed() {
         StringBuilder newsFeedBuilder = new StringBuilder();
@@ -234,7 +239,9 @@ public class ClientHandler implements Runnable {
             if (post != null) {
                 try {
                     post.addComment(commentAuthor, commentContent);
+                    System.out.println("Comment added successfully!");
                     return "Comment added successfully!";
+
                 } catch (PostIncompleteException | CommentIncompleteException e) {
                     return "Error adding comment: " + e.getMessage();
                 }

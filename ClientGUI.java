@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientGUI {
     JFrame frame;
@@ -225,6 +226,9 @@ public class ClientGUI {
             String title = titleField.getText();
             String content = contentField.getText();
             String imageURL = imageURLField.getText();
+            if(imageURL.isEmpty()) {
+                imageURL = "No image";
+            }
             Post newPost;
             try {
                 newPost = new Post(title, content, loggedInUser, false, imageURL, 0, 0);
@@ -255,9 +259,78 @@ public class ClientGUI {
     }
 
     private void commentOnPost() {
-        // Implementation to comment on post
-        JOptionPane.showMessageDialog(frame, "Commenting on post...");
+        String username = JOptionPane.showInputDialog(frame, "Enter username to search posts:");
+        if (username != null && !username.isEmpty()) {
+            new SwingWorker<Void, JPanel>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+
+                    out.println("COMMENT_ON_POST");
+                    out.println(username);
+                    String response;
+
+                    try {
+                        while ((response = in.readLine()) != null) {
+                            System.out.println("1");
+                            String title = response;
+                            String content = in.readLine();
+                            String author = in.readLine();
+                            String imageURL = in.readLine();
+                            String upvotes = in.readLine();
+                            String downvotes = in.readLine();
+
+                            System.out.println("2");
+
+                            JPanel postPanel = new JPanel();
+                            postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+                            postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
+                            postPanel.add(new JLabel("Content: " + content));
+                            if (!imageURL.isEmpty()) {
+                                postPanel.add(new JLabel("Image URL: " + imageURL));
+                            }
+                            postPanel.add(new JLabel("Upvotes: " + upvotes));
+                            postPanel.add(new JLabel("Downvotes: " + downvotes));
+
+                            System.out.println("3");
+                            JButton commentButton = new JButton("Comment");
+                            commentButton.addActionListener(e -> {
+                                String comment = JOptionPane.showInputDialog(frame, "Enter your comment:");
+                                if (comment != null && !comment.isEmpty()) {
+                                    out.println("ADD_COMMENT");
+                                    out.println(title);
+                                    out.println(loggedInUser);
+                                    out.println(comment);
+                                }
+                            });
+                            postPanel.add(commentButton);
+
+                            publish(postPanel);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void process(List<JPanel> chunks) {
+                    for (JPanel panel : chunks) {
+                        frame.getContentPane().add(panel);
+                    }
+                    frame.revalidate(); // 在修改 UI 后调用 revalidate 和 repaint 是一个好习惯
+                    frame.repaint();
+                }
+
+
+                @Override
+                protected void done() {
+                    frame.revalidate();
+                    frame.repaint();
+                }
+            }.execute();
+        }
     }
+
 
     private void searchUser() {
         // Implementation to search user
@@ -275,69 +348,161 @@ public class ClientGUI {
     }
 
     private void logout() {
-        // Implementation to logout
-        JOptionPane.showMessageDialog(frame, "Logging out...");
+        // Send a logout request to the server
+        out.println("LOGOUT");
+        try {
+            String response = in.readLine();
+            if ("Logout successful!".equals(response)) {
+                // Clear the user session information
+                loggedInUser = null;
+                // Clear the existing UI and show the login UI
+                frame.getContentPane().removeAll();
+                initializeUI();
+                frame.revalidate();
+                frame.repaint();
+                JOptionPane.showMessageDialog(frame, "Logged out successfully!");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Failed to logout: " + response);
+            }
+        } catch (IOException ioException) {
+            JOptionPane.showMessageDialog(frame, "Error logging out: " + ioException.getMessage());
+        }
     }
 
     private void viewNewsFeed() {
-        System.out.println("1");
-        // Clear the existing UI and set up a new one for viewing the news feed
-        JFrame newsFeedFrame = new JFrame("News Feed");
-        newsFeedFrame.setSize(500, 400); // Adjust the size of the frame
         frame.getContentPane().removeAll();
+        frame.setSize(800,600); // Set a larger size for the news feed
         JPanel newsFeedPanel = new JPanel();
-        newsFeedPanel.setLayout(new BoxLayout(newsFeedPanel, BoxLayout.Y_AXIS)); // Set layout to BoxLayout
+        newsFeedPanel.setLayout(new BoxLayout(newsFeedPanel, BoxLayout.Y_AXIS));
         frame.add(newsFeedPanel);
 
-        System.out.println("2");
+        new SwingWorker<Void, JPanel>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                out.println("VIEW_NEWS_FEED"); // Send request to the server to retrieve the news feed
+                String response;
+                int i = 0;
+                while ((response = in.readLine()) != null) {
+                   if(i == 0) {
+                       String title = response;
+                       String content = in.readLine();
+                       String author = in.readLine();
+                       String imageURL = in.readLine();
+                       String upvotes = in.readLine();
+                       String downvotes = in.readLine();
+                       JPanel postPanel = new JPanel();
+                       postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+                       postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
+                       postPanel.setPreferredSize(new Dimension(1000, 600));
 
-        out.println("VIEW_NEWS_FEED"); // Send request to the server to retrieve the news feed
+                       JLabel contentLabel = new JLabel("Content: " + content);
+                       contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(contentLabel);
 
-        try {
-            String response;
-            while ((response = in.readLine()) != null) {
-                // Assume each post is sent as a series of lines: title, content, author
-                String title = response;
-                String content = in.readLine();
-                String author = in.readLine();
-                String imageURL = in.readLine();
-                String upvotes = in.readLine();
-                String downvotes = in.readLine();
-                System.out.println("Title: " + title);
-                System.out.println("Content: " + content);
-                System.out.println("Author: " + author);
-                System.out.println("Image URL: " + imageURL);
-                System.out.println("Upvotes: " + upvotes);
-                System.out.println("Downvotes: " + downvotes);
 
-                // Create a panel for the post and add it to the news feed panel
-                JPanel postPanel = new JPanel();
-                postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-                postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
-                postPanel.add(new JLabel("Content: " + content));
+                       if (!imageURL.isEmpty()) {
+                           postPanel.add(new JLabel("Image URL: " + imageURL));
+                       }
 
-                if (!imageURL.isEmpty()) {
-                    postPanel.add(new JLabel("Image URL: " + imageURL));
+                       JLabel upvotesLabel = new JLabel("Upvotes: " + upvotes);
+                       upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(upvotesLabel);
+
+                       JLabel downvotesLabel = new JLabel("Downvotes: " + downvotes);
+                       downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(downvotesLabel);
+
+                       publish(postPanel);
+                   } else if (i == 1) {
+                       String space = response;
+                       String space2 = in.readLine();
+                       String title = in.readLine();
+                       String content = in.readLine();
+                       String author = in.readLine();
+                       String imageURL = in.readLine();
+                       String upvotes = in.readLine();
+                       String downvotes = in.readLine();
+                       JPanel postPanel = new JPanel();
+                       postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+                       postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
+                       postPanel.setPreferredSize(new Dimension(1000, 600));
+
+                       JLabel contentLabel = new JLabel("Content: " + content);
+                       contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(contentLabel);
+
+
+                       if (!imageURL.isEmpty()) {
+                           postPanel.add(new JLabel("Image URL: " + imageURL));
+                       }
+
+                       JLabel upvotesLabel = new JLabel("Upvotes: " + upvotes);
+                       upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(upvotesLabel);
+
+                       JLabel downvotesLabel = new JLabel("Downvotes: " + downvotes);
+                       downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(downvotesLabel);
+
+                       publish(postPanel);
+                   } else {
+                          String space = response;
+                          String title = in.readLine();
+                          String content = in.readLine();
+                          String author = in.readLine();
+                          String imageURL = in.readLine();
+                          String upvotes = in.readLine();
+                          String downvotes = in.readLine();
+                       JPanel postPanel = new JPanel();
+                       postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+                       postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
+                       postPanel.setPreferredSize(new Dimension(1000, 600));
+
+                       JLabel contentLabel = new JLabel("Content: " + content);
+                       contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(contentLabel);
+
+
+                       if (!imageURL.isEmpty()) {
+                           postPanel.add(new JLabel("Image URL: " + imageURL));
+                       }
+
+                       JLabel upvotesLabel = new JLabel("Upvotes: " + upvotes);
+                       upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(upvotesLabel);
+
+                       JLabel downvotesLabel = new JLabel("Downvotes: " + downvotes);
+                       downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                       postPanel.add(downvotesLabel);
+
+                       publish(postPanel);
+                   }
+                    i++;
                 }
-                postPanel.add(new JLabel("Upvotes: " + upvotes));
-                postPanel.add(new JLabel("Downvotes: " + downvotes));
-
-                newsFeedPanel.add(postPanel);
+                return null;
             }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, "Error retrieving news feed: " + e.getMessage());
-        }
-        System.out.println("3");
 
-        // Add a "Back" button to return to the social media menu
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> showSocialMediaMenu());
-        newsFeedPanel.add(backButton);
+            @Override
+            protected void process(java.util.List<JPanel> chunks) {
+                for (JPanel panel : chunks) {
+                    newsFeedPanel.add(panel);
+                }
+                frame.revalidate(); // 通常在修改组件后调用 revalidate 和 repaint
+                frame.repaint();
+            }
 
-        frame.revalidate();
-        frame.repaint();
+            @Override
+            protected void done() {
+                JButton backButton = new JButton("Back");
+                backButton.addActionListener(e -> showSocialMediaMenu());
+                newsFeedPanel.add(backButton);
+                frame.revalidate();
+                frame.repaint();
+            }
+        }.execute();
     }
-    
+
+
     public void updateNewsFeed(String postDetails) {
 
         JLabel label = new JLabel(postDetails);
