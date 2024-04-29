@@ -493,20 +493,20 @@ public class ClientGUI {
                        postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
                        postPanel.setPreferredSize(new Dimension(1000, 600));
 
-                       JLabel contentLabel = new JLabel("Content: " + content);
+                       JLabel contentLabel = new JLabel(content);
                        contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(contentLabel);
 
 
                        if (!imageURL.isEmpty()) {
-                           postPanel.add(new JLabel("Image URL: " + imageURL));
+                           postPanel.add(new JLabel(imageURL));
                        }
 
-                       JLabel upvotesLabel = new JLabel("Upvotes: " + upvotes);
+                       JLabel upvotesLabel = new JLabel(upvotes);
                        upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(upvotesLabel);
 
-                       JLabel downvotesLabel = new JLabel("Downvotes: " + downvotes);
+                       JLabel downvotesLabel = new JLabel(downvotes);
                        downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(downvotesLabel);
 
@@ -525,20 +525,20 @@ public class ClientGUI {
                        postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
                        postPanel.setPreferredSize(new Dimension(1000, 600));
 
-                       JLabel contentLabel = new JLabel("Content: " + content);
+                       JLabel contentLabel = new JLabel(content);
                        contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(contentLabel);
 
 
                        if (!imageURL.isEmpty()) {
-                           postPanel.add(new JLabel("Image URL: " + imageURL));
+                           postPanel.add(new JLabel(imageURL));
                        }
 
-                       JLabel upvotesLabel = new JLabel("Upvotes: " + upvotes);
+                       JLabel upvotesLabel = new JLabel(upvotes);
                        upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(upvotesLabel);
 
-                       JLabel downvotesLabel = new JLabel("Downvotes: " + downvotes);
+                       JLabel downvotesLabel = new JLabel(downvotes);
                        downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(downvotesLabel);
 
@@ -556,20 +556,20 @@ public class ClientGUI {
                        postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
                        postPanel.setPreferredSize(new Dimension(1000, 600));
 
-                       JLabel contentLabel = new JLabel("Content: " + content);
+                       JLabel contentLabel = new JLabel(content);
                        contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(contentLabel);
 
 
                        if (!imageURL.isEmpty()) {
-                           postPanel.add(new JLabel("Image URL: " + imageURL));
+                           postPanel.add(new JLabel(imageURL));
                        }
 
-                       JLabel upvotesLabel = new JLabel("Upvotes: " + upvotes);
+                       JLabel upvotesLabel = new JLabel(upvotes);
                        upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(upvotesLabel);
 
-                       JLabel downvotesLabel = new JLabel("Downvotes: " + downvotes);
+                       JLabel downvotesLabel = new JLabel(downvotes);
                        downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                        postPanel.add(downvotesLabel);
 
