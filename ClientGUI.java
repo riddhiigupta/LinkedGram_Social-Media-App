@@ -15,6 +15,7 @@ public class ClientGUI {
     private PrintWriter out;
     private BufferedReader in;
     private static String loggedInUser;
+    private boolean useAlternateImage = false;
 
     public ClientGUI() {
         initializeUI();
@@ -303,6 +304,7 @@ public class ClientGUI {
         JTextField awardsField = new JTextField();
         JTextField skillsField = new JTextField();
         JTextField statusField = new JTextField();
+        JTextField photoField = new JTextField();
 
         panel.add(new JLabel("Username(same as the one you just entered): "));
         panel.add(usernameField);
@@ -318,6 +320,9 @@ public class ClientGUI {
         panel.add(skillsField);
         panel.add(new JLabel("Status:"));
         panel.add(statusField);
+        panel.add(new JLabel("Photo (for example: boilermaker! or a cute squirrel)"));
+        panel.add(photoField);
+
 
         int result = JOptionPane.showConfirmDialog(null, panel, "Create Profile",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -378,7 +383,15 @@ public class ClientGUI {
                     profileInfo.append(status).append("\n");
 
                     // Load the image
-                    ImageIcon imageIcon = new ImageIcon("boilermaker!.svg.png");
+                    ImageIcon imageIcon;
+                    if (useAlternateImage) {
+                        imageIcon = new ImageIcon("squirrel.jpg");
+                    } else {
+                        imageIcon = new ImageIcon("boilermaker!.svg.png");
+                    }
+                    useAlternateImage = !useAlternateImage; // Switch the image for the next time
+
+
                     Image image = imageIcon.getImage(); // transform it into Image
                     Image newImage = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newImage);  // transform it back to ImageIcon
