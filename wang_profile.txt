@@ -1,6 +1,0 @@
-About: I am taking CS 18000
-Experience: Taking CS 180
-Education: Purdue
-Awards: N/A
-Skills: java
-Status: good

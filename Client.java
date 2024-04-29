@@ -138,7 +138,7 @@ public class Client {
     }
 
 
-    private static void handleSocialMediaChoice(String choice) throws IOException, PostIncompleteException {
+    static void handleSocialMediaChoice(String choice) throws IOException, PostIncompleteException {
         switch (choice) {
             case "1":
                 viewNewsFeed();
