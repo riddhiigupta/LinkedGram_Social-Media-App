@@ -1,5 +1,18 @@
 # Program Overview
 
+## Distribution:
+- **Riddhi Gupta**: Submitted Report on Brightspace.
+- **Dong Wang**: Submitted Vocareum workspace.
+- 
+## How to run the program:
+- **Note**: There are four main function: Create Post, Comment on Post, Search User, and Create Profile. You can only choose to run one of the functions at a time due to the communication issue between client and server. If you want to run another function, you need to restart the program.
+- **route1**: Register a new account and create a profile. After registration, you will be redirected to the one of the main functions: Create Profile
+- **route2**: Login with an existing account. After login, you will be redirected to the main menu.Chose one of the main functions: Create Post, Comment on Post, Search User.
+- **non-main function**: Logout, view news feed, upvote post, downvote post. These functions can be accessed as many times as you want without restarting the program.
+1. Open the `AppStarter` file.
+2. Multiple-client: since `AppStarter` file contains server, so run `ClientGUI` file for another client.
+
+
 ## Key Features:
 - **Login and Registration**: Start by entering a username and password. You have the option to either log in with these credentials or register a new account. Registration will redirect you to a profile creation page. Note: The username on the profile registration page must match the one used on the login screen.
 - **Profile Creation**: Choose from two avatar pictures for extra credit: "boilermaker" or "cute squirrel". Once registration is complete, the system will redirect back to the login page with the username and password fields pre-filled, ready for you to log in.
@@ -12,7 +25,6 @@
 - **Interface** For each class, we have included an interface to ensure the correct structure of the methods.
 
 ## Important Notes:
-- **Stability Issues**: Due to client-server communication, creating or commenting on posts might occasionally cause the application to stall (not crash). These changes will be saved and can be viewed after restarting the application.
 - **Running the Application**: Execute the `AppStarter` file to launch the application. After opening, you will be directed to the login page.
 
 ## Getting Started:

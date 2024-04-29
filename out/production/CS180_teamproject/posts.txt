@@ -1,1 +1,3 @@
+Test;This is a test post;bruce;No image;0;0;false;dong:The test code runs perfectly!
+asdasd;asdasdad;dong;No image;0;0;false
 

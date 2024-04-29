@@ -30,7 +30,8 @@ public class LongRunningTask extends SwingWorker<Void, Void> {
             frame.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "操作失败: " + e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame,
+                    "Wrong " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -20,7 +20,9 @@ public class Post implements PostRequirements {
     private String commentsString;
 
 
-    public Post(String title, String content, String author, boolean hidden, String imageURL, int upvotes, int downvotes, String line) throws PostIncompleteException {
+    public Post(String title, String content, String author,
+                boolean hidden, String imageURL, int upvotes,
+                int downvotes, String line) throws PostIncompleteException {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -44,7 +46,9 @@ public class Post implements PostRequirements {
         }
     }
 
-    public Post(String title, String content, String author, boolean hidden, String imageURL, int upvotes, int downvotes) throws PostIncompleteException {
+    public Post(String title, String content,
+                String author, boolean hidden, String imageURL,
+                int upvotes, int downvotes) throws PostIncompleteException {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -68,7 +72,8 @@ public class Post implements PostRequirements {
         }
     }
 
-    public void addComment(String writer, String message) throws CommentIncompleteException, PostIncompleteException {
+    public void addComment(String writer, String message)
+            throws CommentIncompleteException, PostIncompleteException {
         if (message.isEmpty()) {
             throw new CommentIncompleteException("Message is required");
         }

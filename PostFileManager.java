@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class PostFileManager {
     public static void savePost(Post post) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(POSTS_FILE, true))) {
             writer.println(postToString(post));
+            writer.println();
             System.out.println("Post saved to file: " + post.getTitle()); // Add this line for logging
         } catch (IOException e) {
             e.printStackTrace();
@@ -29,12 +31,16 @@ public class PostFileManager {
     public static List<Post> getAllPosts() {
         List<Post> posts = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(POSTS_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                Post post = stringToPost(line);
-                posts.add(post);
-                System.out.println("Post: " + post.toString());
-            }
+            String line1 = reader.readLine();
+            Post post = stringToPost(line1);
+            posts.add(post);
+            System.out.println("Post: " + post.toString());
+            String line2 = reader.readLine();
+            Post post1 = stringToPost(line2);
+            posts.add(post1);
+            System.out.println("Post: " + post1.toString());
+
+
         } catch (IOException | PostIncompleteException e) {
             e.printStackTrace();
         }
@@ -43,14 +49,17 @@ public class PostFileManager {
 
     private static String postToString(Post post) {
         // Convert Post object to string format for saving to file
-        return String.format("%s;%s;%s;%s;%d;%d;%s", post.getTitle(), post.getContent(), post.getAuthor(),
+        return String.format("\n%s;%s;%s;%s;%d;%d;%s", post.getTitle(), post.getContent(), post.getAuthor(),
                 post.getImageURL(), post.getUpvotes(), post.getDownvotes(), post.isHidden());
     }
 
     private static Post stringToPost(String line) throws PostIncompleteException {
         String[] parts = line.split(";|:");
+        System.out.println(Arrays.toString(parts));
         if (parts.length == 6) {
-            return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+            return new Post(parts[0], parts[1], parts[2],
+                    Boolean.parseBoolean(parts[6]), parts[3],
+                    Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
         }
         // Assuming format is: title;content;author;imageURL;upvotes;downvotes;hidden
         StringBuilder sb = new StringBuilder();
@@ -88,6 +97,7 @@ public class PostFileManager {
             }
         }
         sb = result;
-        return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), sb.toString());
+        return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]),
+                parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), sb.toString());
     }
 }

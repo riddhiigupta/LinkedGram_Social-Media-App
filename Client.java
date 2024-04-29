@@ -125,7 +125,8 @@ public class Client {
     }
 
 
-    private static void showSocialMediaMenu() throws IOException, PostIncompleteException {
+    private static void showSocialMediaMenu() throws IOException,
+            PostIncompleteException {
         String choice;
         do {
             System.out.println("\n=== Social Media Platform Menu ===");
@@ -145,7 +146,8 @@ public class Client {
     }
 
 
-    static void handleSocialMediaChoice(String choice) throws IOException, PostIncompleteException {
+    static void handleSocialMediaChoice(String choice) throws IOException,
+            PostIncompleteException {
         switch (choice) {
             case "1":
                 viewNewsFeed();
@@ -233,7 +235,8 @@ public class Client {
                 in.close();
                 System.out.println("User " + loggedInUser + " logged out successfully.");
             } catch (IOException e) {
-                System.out.println("Failed to close resources for " + loggedInUser + ": " + e.getMessage());
+                System.out.println("Failed to close resources for " +
+                        loggedInUser + ": " + e.getMessage());
             }
             loggedInUser = null; // Clear the user session information
         }
@@ -251,7 +254,8 @@ public class Client {
         String imageURL = scanner.nextLine();
 
         // Create Post object
-        Post newPost = new Post(title, content, loggedInUser, false, imageURL, 0, 0);
+        Post newPost = new Post(title, content, loggedInUser,
+                false, imageURL, 0, 0);
 
         // Send post data to server
         out.println("CREATE_POST");
@@ -288,7 +292,8 @@ public class Client {
     }
 
 
-    private static void viewNewsFeed() throws IOException, PostIncompleteException {
+    private static void viewNewsFeed() throws IOException,
+            PostIncompleteException {
         out.println("VIEW_NEWS_FEED"); // Send request to the server to retrieve the news feed
         String newsFeedResponse;
         boolean isNewsFeedEnded = false;

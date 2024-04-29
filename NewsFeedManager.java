@@ -38,6 +38,8 @@ public class NewsFeedManager {
     private static Post stringToPost(String line) throws PostIncompleteException {
         String[] parts = line.split(";");
         // Assuming format is: title;content;author;imageURL;upvotes;downvotes;hidden
-        return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+        return new Post(parts[0], parts[1],
+                parts[2], Boolean.parseBoolean(parts[6]),
+                parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
     }
 }

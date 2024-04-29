@@ -37,7 +37,8 @@ public class ClientGUI {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             System.out.println("Connected to server.");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, "Cannot connect to server: " + e.getMessage());
+            JOptionPane.showMessageDialog(frame, "Cannot connect to server: "
+                    + e.getMessage());
         }
     }
 
@@ -65,7 +66,8 @@ public class ClientGUI {
         int newWidth = 200; // This can be any value you want
         int newHeight = (newWidth * originalHeight) / originalWidth; // Keep the aspect ratio
 
-        Image newImage = image.getScaledInstance(newWidth, newHeight, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newImage = image.getScaledInstance(newWidth, newHeight,
+                java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         imageIcon = new ImageIcon(newImage);  // transform it back to ImageIcon
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(imageIcon);
@@ -132,7 +134,8 @@ public class ClientGUI {
                 JOptionPane.showMessageDialog(frame, "Login failed!");
             }
         } catch (IOException ioException) {
-            JOptionPane.showMessageDialog(frame, "Error logging in: " + ioException.getMessage());
+            JOptionPane.showMessageDialog(frame, "Error logging in: "
+                    + ioException.getMessage());
         }
     }
 
@@ -149,7 +152,8 @@ public class ClientGUI {
                 createProfileGUI(); // Call createProfileGUI method after successful registration
             }
         } catch (IOException ioException) {
-            JOptionPane.showMessageDialog(frame, "Error registering: " + ioException.getMessage());
+            JOptionPane.showMessageDialog(frame, "Error registering: "
+                    + ioException.getMessage());
         }
     }
 
@@ -157,7 +161,8 @@ public class ClientGUI {
         // Clear the existing UI and set up a new one for social media features
         frame.getContentPane().removeAll();
         JPanel socialMediaPanel = new JPanel();
-        socialMediaPanel.setLayout(new BoxLayout(socialMediaPanel, BoxLayout.Y_AXIS)); // Set layout to BoxLayout
+        socialMediaPanel.setLayout(new BoxLayout(socialMediaPanel,
+                BoxLayout.Y_AXIS)); // Set layout to BoxLayout
         frame.add(socialMediaPanel);
 
         // Add buttons for different social media actions
@@ -253,7 +258,8 @@ public class ClientGUI {
             }
             Post newPost;
             try {
-                newPost = new Post(title, content, loggedInUser, false, imageURL, 0, 0);
+                newPost = new Post(title, content, loggedInUser, false,
+                        imageURL, 0, 0);
             } catch (PostIncompleteException ex) {
                 throw new RuntimeException(ex);
             }
@@ -270,10 +276,12 @@ public class ClientGUI {
                     JOptionPane.showMessageDialog(frame, "Post created successfully!");
                     showSocialMediaMenu();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Failed to create post: " + response);
+                    JOptionPane.showMessageDialog(frame, "Failed to create post: "
+                            + response);
                 }
             } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(frame, "Error creating post: " + ioException.getMessage());
+                JOptionPane.showMessageDialog(frame, "Error creating post: "
+                        + ioException.getMessage());
             }
         });
         createPostPanel.add(submitButton);
@@ -283,9 +291,12 @@ public class ClientGUI {
     }
 
     private void commentOnPost() {
-        String postTitle = JOptionPane.showInputDialog(frame, "Enter the title of the post you want to comment on:");
-        String commentContent = JOptionPane.showInputDialog(frame, "Enter your comment:");
-        if (postTitle != null && !postTitle.isEmpty() && commentContent != null && !commentContent.isEmpty()) {
+        String postTitle = JOptionPane.showInputDialog(frame,
+                "Enter the title of the post you want to comment on:");
+        String commentContent = JOptionPane.showInputDialog(frame,
+                "Enter your comment:");
+        if (postTitle != null && !postTitle.isEmpty() && commentContent
+                != null && !commentContent.isEmpty()) {
             out.println("COMMENT_ON_POST");
             out.println(postTitle);
             out.println(loggedInUser);
@@ -298,7 +309,8 @@ public class ClientGUI {
                     JOptionPane.showMessageDialog(frame, "Failed to add comment: " + response);
                 }
             } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(frame, "Error adding comment: " + ioException.getMessage());
+                JOptionPane.showMessageDialog(frame, "Error adding comment: "
+                        + ioException.getMessage());
             }
         }
     }
@@ -355,13 +367,15 @@ public class ClientGUI {
                     out.println(passwordField.getPassword());
                 }
             } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(frame, "Error creating profile: " + ioException.getMessage());
+                JOptionPane.showMessageDialog(frame, "Error creating profile: "
+                        + ioException.getMessage());
             }
         }
     }
 
     private void searchUser() {
-        String usernameToSearch = JOptionPane.showInputDialog(frame, "Enter username to search:");
+        String usernameToSearch = JOptionPane.showInputDialog(frame,
+                "Enter username to search:");
         if (usernameToSearch != null && !usernameToSearch.isEmpty()) {
             out.println("SEARCH_USER");
             out.println(usernameToSearch);
@@ -401,7 +415,8 @@ public class ClientGUI {
 
 
                     Image image = imageIcon.getImage(); // transform it into Image
-                    Image newImage = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                    Image newImage = image.getScaledInstance(100, 100,
+                            java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newImage);  // transform it back to ImageIcon
                     JLabel imageLabel = new JLabel(imageIcon);
                     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
@@ -440,10 +455,12 @@ public class ClientGUI {
                     statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
                     panel.add(statusLabel);
 
-                    JOptionPane.showMessageDialog(frame, panel, "User profile for " + usernameToSearch, JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, panel, "User profile for "
+                            + usernameToSearch, JOptionPane.PLAIN_MESSAGE);
                 }
             } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(frame, "Error searching user: " + ioException.getMessage());
+                JOptionPane.showMessageDialog(frame, "Error searching user: "
+                        + ioException.getMessage());
             }
         }
     }
@@ -503,7 +520,11 @@ public class ClientGUI {
                     StringBuilder commentsBuilder = new StringBuilder();
                     in.mark(1000); // Mark the current position
                     String line = in.readLine(); // Read the next line
-                    while (line != null && !line.startsWith("Downvotes:") && !line.startsWith("Upvotes:") && !line.startsWith("Image URL:") && !line.startsWith("Title:") && !line.startsWith("Content:")) {
+                    while (line != null && !line.startsWith("Downvotes:")
+                            && !line.startsWith("Upvotes:")
+                            && !line.startsWith("Image URL:")
+                            && !line.startsWith("Title:")
+                            && !line.startsWith("Content:")) {
                         commentsBuilder.append(line).append("\n");
                         in.mark(1000); // Mark the current position
                         line = in.readLine(); // Read the next line
@@ -519,7 +540,8 @@ public class ClientGUI {
                     postPanel.setPreferredSize(new Dimension(1000, 600));
 
                     // Ensure the content label handles long text correctly by wrapping text
-                    JLabel contentLabel = new JLabel("<html><body style='width: 950px'>" + content + "</body></html>");
+                    JLabel contentLabel = new JLabel("<html><body style='width: 950px'>"
+                            + content + "</body></html>");
                     contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                     postPanel.add(contentLabel);
 

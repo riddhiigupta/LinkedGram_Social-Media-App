@@ -8,6 +8,8 @@
 - **Search Users**: Search for users by username to view their avatar and personal information.
 - **Voting**: The infrastructure for upvoting and downvoting posts is prepared for future enhancements.
 - **Logout**: Allows users to switch accounts without closing the program.
+- **TestCode**: For each class, we have included a test class to ensure the correct functionality of the methods.
+- **Interface** For each class, we have included an interface to ensure the correct structure of the methods.
 
 ## Important Notes:
 - **Stability Issues**: Due to client-server communication, creating or commenting on posts might occasionally cause the application to stall (not crash). These changes will be saved and can be viewed after restarting the application.
@@ -451,3 +453,80 @@ Here is a brief overview of the methods in the `ProfileTest` class:
 
 - `testSetPersonalInformation()`: This test method checks if the `setPersonalInformation(String personalInformation)` method in the `Profile` class correctly sets the personal information of a profile.
 
+### Server
+
+`Server` is a class in our application that manages the server-side operations.
+
+Here is a brief overview of the methods in the `Server` class:
+
+- `Server()`: This is the constructor of the `Server` class. It initializes the server with the necessary parameters and creates an initial `NewsFeed` instance.
+
+- `run()`: This method starts the server. It sets up the server socket and starts listening for client connections. It also adds any initial credentials and creates a `ClientHandler` for each client connection.
+
+- `main(String[] args)`: This is the main method that starts the server. It creates an instance of the `Server` class and starts a new thread for it.
+
+### User
+
+`User` is a class in our application that represents a user in the system.
+
+Here is a brief overview of the methods in the `User` class:
+
+- `User(String username, String password)`: This is the constructor of the `User` class. It initializes the user with the given username and password.
+
+- `getUsername()`: This method returns the username of the user.
+
+- `getPassword()`: This method returns the password of the user.
+
+- `getFollowing()`: This method returns a list of users that this user is following.
+
+- `addFollowing(User user)`: This method adds a user to the list of users that this user is following.
+
+- `setName(String newValue)`: This method sets the username of the user.
+
+- `removeFollowing(User connection)`: This method removes a user from the list of users that this user is following.
+
+- `getProfile()`: This method returns the profile of the user.
+
+- `setProfile(Profile profile)`: This method sets the profile of the user.
+
+- `addFollower(User follower)`: This method adds a follower to this user. It does this by adding this user to the follower's list of following users.
+
+### UserCredentials
+
+`UserCredentials` is a class in our application that manages the user credentials.
+
+Here is a brief overview of the methods in the `UserCredentials` class:
+
+- `isValidCredentials(String username, String password)`: This static method checks if the provided username and password match the stored credentials. It returns true if the credentials are valid, and false otherwise.
+
+- `addCredentials(String username, String password)`: This static method adds a new set of credentials to the stored credentials. It takes a username and password as parameters.
+
+- `loadCredentialsFromFile()`: This static method loads the stored credentials from a file. It is called when the class is loaded.
+
+- `saveCredentialsToFile()`: This private static method saves the current credentials to a file. It is called whenever a new set of credentials is added.
+
+### UserTest
+
+`UserTest` is a test class in our application. It contains unit tests for the `User` class.
+
+Here is a brief overview of the methods in the `UserTest` class:
+
+- `testGetUsername()`: This test method checks if the `getUsername()` method in the `User` class correctly returns the username of a user.
+
+- `testGetPassword()`: This test method checks if the `getPassword()` method in the `User` class correctly returns the password of a user.
+
+- `testGetFollowing()`: This test method checks if the `getFollowing()` method in the `User` class correctly returns a list of users that this user is following.
+
+- `testAddFollowing()`: This test method checks if the `addFollowing(User user)` method in the `User` class correctly adds a user to the list of users that this user is following.
+
+- `testSetName()`: This test method checks if the `setName(String newValue)` method in the `User` class correctly sets the username of a user.
+
+- `testRemoveFollowing()`: This test method checks if the `removeFollowing(User connection)` method in the `User` class correctly removes a user from the list of users that this user is following.
+
+- `testGetProfile()`: This test method checks if the `getProfile()` method in the `User` class correctly returns the profile of a user.
+
+- `testSetProfile()`: This test method checks if the `setProfile(Profile profile)` method in the `User` class correctly sets the profile of a user.
+
+- `testAddFollower()`: This test method checks if the `addFollower(User follower)` method in the `User` class correctly adds a follower to this user.
+
+Please replace the placeholders with the actual details of your `UserTest` class.

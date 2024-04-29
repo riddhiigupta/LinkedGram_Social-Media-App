@@ -15,8 +15,11 @@ public class Comment extends Post implements CommentRequirements {
     private Post post;
 
 
-    public Comment(Post post, String content, String author, boolean hidden, int upvotes, int downvotes) throws CommentIncompleteException, PostIncompleteException {
-        super(post.getTitle(), post.getContent(), post.getAuthor(), post.isHidden(), post.getImageURL(), post.getUpvotes(), post.getDownvotes());
+    public Comment(Post post, String content, String author,
+                   boolean hidden, int upvotes, int downvotes)
+            throws CommentIncompleteException, PostIncompleteException {
+        super(post.getTitle(), post.getContent(),
+                post.getAuthor(), post.isHidden(), post.getImageURL(), post.getUpvotes(), post.getDownvotes());
         this.content = content;
         this.author = author;
         this.hidden = hidden;
@@ -50,7 +53,8 @@ public class Comment extends Post implements CommentRequirements {
     }
 
     public String toString() {
-        return "\nAuthor: " + author + "\nContent: " + content + "\nUpvotes: " + upvotes + "\nDownvotes: " + downvotes;
+        return "\nAuthor: " + author + "\nContent: " + content
+                + "\nUpvotes: " + upvotes + "\nDownvotes: " + downvotes;
     }
 
     public String getContent() {

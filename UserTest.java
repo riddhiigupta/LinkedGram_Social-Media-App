@@ -61,7 +61,8 @@ public class UserTest {
     @Test
     public void testGetProfile() throws ProfileIncompleteException {
         User user = new User("username", "password");
-        Profile profile = new Profile("about", new ArrayList<>(), "education", "awards", "skills", "status");
+        Profile profile = new Profile("about", new ArrayList<>(),
+                "education", "awards", "skills", "status");
         user.setProfile(profile);
         assertEquals(profile, user.getProfile());
     }
@@ -69,7 +70,8 @@ public class UserTest {
     @Test
     public void testSetProfile() throws ProfileIncompleteException {
         User user = new User("username", "password");
-        Profile profile = new Profile("about", new ArrayList<>(), "education", "awards", "skills", "status");
+        Profile profile = new Profile("about", new ArrayList<>(),
+                "education", "awards", "skills", "status");
         user.setProfile(profile);
         assertEquals(profile, user.getProfile());
     }

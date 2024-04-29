@@ -23,7 +23,8 @@ public class ClientHandler implements Runnable {
     private List<User> users;
     private List<NewsFeed> newsFeeds;
 
-    public ClientHandler(Socket clientSocket, List<User> users, List<NewsFeed> newsFeeds) throws IOException {
+    public ClientHandler(Socket clientSocket,
+                         List<User> users, List<NewsFeed> newsFeeds) throws IOException {
         this.clientSocket = clientSocket;
         this.users = users;
         this.newsFeeds = newsFeeds;
@@ -60,7 +61,8 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private String handleRequest(String request) throws IOException, PostIncompleteException, ProfileIncompleteException {
+    private String handleRequest(String request) throws IOException,
+            PostIncompleteException, ProfileIncompleteException {
         String[] requestParts = request.split(" ", 2);
         switch (requestParts[0]) {
             case "REGISTER":
@@ -156,7 +158,8 @@ public class ClientHandler implements Runnable {
     }
 
 
-    private String handleCreateProfile(String username) throws IOException, ProfileIncompleteException {
+    private String handleCreateProfile(String username) throws IOException,
+            ProfileIncompleteException {
         // Read profile information from the client
         String about = bufferedReader.readLine();  // Read the about field
         String experience = bufferedReader.readLine();  // Read the experience field

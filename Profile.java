@@ -18,7 +18,9 @@ public class Profile implements Serializable {
     private String skills;
     private String status;
 
-    public Profile(String about, List<String> experience, String education, String awards, String skills, String status) throws ProfileIncompleteException {
+    public Profile(String about, List<String> experience,
+                   String education, String awards, String skills, String status)
+            throws ProfileIncompleteException {
         this.about = about;
         this.experience = new List<>() {
             @Override
@@ -154,7 +156,8 @@ public class Profile implements Serializable {
     }
 
     private void validateProfile() throws ProfileIncompleteException {
-        if (this.about == null || this.education == null || this.awards == null || this.skills == null || this.status == null) {
+        if (this.about == null || this.education == null
+                || this.awards == null || this.skills == null || this.status == null) {
             throw new ProfileIncompleteException("Profile is incomplete");
         }
     }
@@ -210,6 +213,8 @@ public class Profile implements Serializable {
 
     @Override
     public String toString() {
-        return "About: " + about + "\nExperience: " + experience.toString() + "\nEducation: " + education + "\nAwards: " + awards + "\nSkills: " + skills + "\nStatus: " + status;
+        return "About: " + about + "\nExperience: "
+                + experience.toString() + "\nEducation: " + education
+                + "\nAwards: " + awards + "\nSkills: " + skills + "\nStatus: " + status;
     }
 }

@@ -16,7 +16,8 @@ public class PostFileManagerTest {
 
     @Test
     public void testSavePost() throws PostIncompleteException {
-        Post post = new Post("title", "content", "author", false, "url", 0, 0, "comments");
+        Post post = new Post("title", "content", "author",
+                false, "url", 0, 0, "comments");
         PostFileManager.savePost(post);
         List<Post> posts = PostFileManager.getAllPosts();
         assertTrue(posts.stream().anyMatch(p -> p.getTitle().equals(post.getTitle())));
