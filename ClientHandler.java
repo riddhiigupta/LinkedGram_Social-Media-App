@@ -225,11 +225,6 @@ public class ClientHandler implements Runnable {
         return postFound ? "Post downvoted successfully!" : "Post not found!";
     }
 
-
-
-
-
-
     private String handleCommentOnPost() throws IOException {
         String postTitle = bufferedReader.readLine();
         String commentAuthor = bufferedReader.readLine();
