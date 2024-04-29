@@ -417,7 +417,7 @@ public class ClientGUI {
 
     private void viewNewsFeed() {
         frame.getContentPane().removeAll();
-        frame.setSize(800,600); // Set a larger size for the news feed
+        frame.setSize(800, 600); // Set a larger size for the news feed
         JPanel newsFeedPanel = new JPanel();
         newsFeedPanel.setLayout(new BoxLayout(newsFeedPanel, BoxLayout.Y_AXIS));
         frame.add(newsFeedPanel);
@@ -429,100 +429,35 @@ public class ClientGUI {
                 String response;
                 int i = 0;
                 while ((response = in.readLine()) != null) {
-                   if(i == 0) {
-                       String title = response;
-                       String content = in.readLine();
-                       String author = in.readLine();
-                       String imageURL = in.readLine();
-                       String upvotes = in.readLine();
-                       String downvotes = in.readLine();
-                       JPanel postPanel = new JPanel();
-                       postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-                       postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
-                       postPanel.setPreferredSize(new Dimension(1000, 600));
+                    String title = response;
+                    String content = in.readLine();
+                    String author = in.readLine();
+                    String imageURL = in.readLine();
+                    String upvotes = in.readLine();
+                    String downvotes = in.readLine();
+                    JPanel postPanel = new JPanel();
+                    postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+                    postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
+                    postPanel.setPreferredSize(new Dimension(1000, 600));
 
-                       JLabel contentLabel = new JLabel(content);
-                       contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(contentLabel);
+                    // Ensure the content label handles long text correctly by wrapping text
+                    JLabel contentLabel = new JLabel("<html><body style='width: 950px'>" + content + "</body></html>");
+                    contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                    postPanel.add(contentLabel);
 
+                    if (!imageURL.isEmpty()) {
+                        postPanel.add(new JLabel(imageURL));
+                    }
 
-                       if (!imageURL.isEmpty()) {
-                           postPanel.add(new JLabel(imageURL));
-                       }
+                    JLabel upvotesLabel = new JLabel(upvotes);
+                    upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                    postPanel.add(upvotesLabel);
 
-                       JLabel upvotesLabel = new JLabel(upvotes);
-                       upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(upvotesLabel);
+                    JLabel downvotesLabel = new JLabel(downvotes);
+                    downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                    postPanel.add(downvotesLabel);
 
-                       JLabel downvotesLabel = new JLabel(downvotes);
-                       downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(downvotesLabel);
-
-                       publish(postPanel);
-                   } else if (i == 1) {
-                       String space = response;
-                       String space2 = in.readLine();
-                       String title = in.readLine();
-                       String content = in.readLine();
-                       String author = in.readLine();
-                       String imageURL = in.readLine();
-                       String upvotes = in.readLine();
-                       String downvotes = in.readLine();
-                       JPanel postPanel = new JPanel();
-                       postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-                       postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
-                       postPanel.setPreferredSize(new Dimension(1000, 600));
-
-                       JLabel contentLabel = new JLabel(content);
-                       contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(contentLabel);
-
-
-                       if (!imageURL.isEmpty()) {
-                           postPanel.add(new JLabel(imageURL));
-                       }
-
-                       JLabel upvotesLabel = new JLabel(upvotes);
-                       upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(upvotesLabel);
-
-                       JLabel downvotesLabel = new JLabel(downvotes);
-                       downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(downvotesLabel);
-
-                       publish(postPanel);
-                   } else {
-                          String space = response;
-                          String title = in.readLine();
-                          String content = in.readLine();
-                          String author = in.readLine();
-                          String imageURL = in.readLine();
-                          String upvotes = in.readLine();
-                          String downvotes = in.readLine();
-                       JPanel postPanel = new JPanel();
-                       postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-                       postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
-                       postPanel.setPreferredSize(new Dimension(1000, 600));
-
-                       JLabel contentLabel = new JLabel(content);
-                       contentLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(contentLabel);
-
-
-                       if (!imageURL.isEmpty()) {
-                           postPanel.add(new JLabel(imageURL));
-                       }
-
-                       JLabel upvotesLabel = new JLabel(upvotes);
-                       upvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(upvotesLabel);
-
-                       JLabel downvotesLabel = new JLabel(downvotes);
-                       downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
-                       postPanel.add(downvotesLabel);
-
-                       publish(postPanel);
-                   }
+                    publish(postPanel);
                     i++;
                 }
                 return null;
@@ -533,7 +468,7 @@ public class ClientGUI {
                 for (JPanel panel : chunks) {
                     newsFeedPanel.add(panel);
                 }
-                frame.revalidate(); // 通常在修改组件后调用 revalidate 和 repaint
+                frame.revalidate(); // Usually call revalidate and repaint after modifying components
                 frame.repaint();
             }
 
@@ -547,7 +482,6 @@ public class ClientGUI {
             }
         }.execute();
     }
-
 
     public void updateNewsFeed(String postDetails) {
 
