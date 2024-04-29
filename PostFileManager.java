@@ -72,6 +72,13 @@ public class PostFileManager {
         if (count % 2 == 1) {
             result.append(sb.substring(start));
         }
+        int lastIndexOfPipe = result.lastIndexOf("|");
+        if (lastIndexOfPipe != -1) {
+            int secondLastIndexOfPipe = result.lastIndexOf("|", lastIndexOfPipe - 1);
+            if (secondLastIndexOfPipe != -1) {
+                result.delete(secondLastIndexOfPipe, result.length());
+            }
+        }
         sb = result;
         return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), sb.toString());
     }
