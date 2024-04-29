@@ -17,8 +17,32 @@ public class Post implements PostRequirements {
     private boolean hidden;
     private String imageURL;
     private ArrayList<Comment> comments;
+    private String commentsString;
 
 
+    public Post(String title, String content, String author, boolean hidden, String imageURL, int upvotes, int downvotes, String line) throws PostIncompleteException {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.imageURL = imageURL;
+        this.upvotes = 0;
+        this.downvotes = 0;
+        this.hidden = false;
+        this.commentsString = line;
+
+        if (title.isEmpty()) {
+            throw new PostIncompleteException("Title is required");
+        }
+        if (content.isEmpty()) {
+            throw new PostIncompleteException("Content is required");
+        }
+        if (author.isEmpty()) {
+            throw new PostIncompleteException("Author is required");
+        }
+        if (imageURL.isEmpty()) {
+            this.imageURL = "No image";
+        }
+    }
     public Post(String title, String content, String author, boolean hidden, String imageURL, int upvotes, int downvotes) throws PostIncompleteException {
         this.title = title;
         this.content = content;
@@ -93,6 +117,7 @@ public class Post implements PostRequirements {
         sb.append("Image URL: ").append(imageURL).append("\n");
         sb.append("Upvotes: ").append(upvotes).append("\n");
         sb.append("Downvotes: ").append(downvotes).append("\n");
+        sb.append("Comments: ").append(commentsString).append("\n");
         return sb.toString();
     }
 

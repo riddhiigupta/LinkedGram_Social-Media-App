@@ -25,6 +25,7 @@ public class PostFileManager {
             while ((line = reader.readLine()) != null) {
                 Post post = stringToPost(line);
                 posts.add(post);
+                System.out.println("Post: " + post.toString());
             }
         } catch (IOException | PostIncompleteException e) {
             e.printStackTrace();
@@ -39,8 +40,39 @@ public class PostFileManager {
     }
 
     private static Post stringToPost(String line) throws PostIncompleteException {
-        String[] parts = line.split(";");
+        String[] parts = line.split(";|:");
+        if(parts.length  ==6) {
+            return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+        }
         // Assuming format is: title;content;author;imageURL;upvotes;downvotes;hidden
-        return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+        StringBuilder sb = new StringBuilder();
+        for(int i = 7; i < parts.length; i++) {
+            if(i % 2 != 0 && i+1 < parts.length) {
+                sb.append(parts[i+1]);
+                sb.append("  --");
+            }
+            if(i < parts.length - 1) {
+                sb.append(parts[i]);
+                sb.append("  |  ");
+            }
+        }
+        StringBuilder result = new StringBuilder();
+        int start = 0;
+        int count = 0;
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '|') {
+                count++;
+                if (count % 2 == 1) {
+                    result.append(sb.substring(start, i+1));
+                } else {
+                    start = i+1;
+                }
+            }
+        }
+        if (count % 2 == 1) {
+            result.append(sb.substring(start));
+        }
+        sb = result;
+        return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), sb.toString());
     }
 }

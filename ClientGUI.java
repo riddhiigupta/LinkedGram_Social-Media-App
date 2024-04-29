@@ -435,6 +435,19 @@ public class ClientGUI {
                     String imageURL = in.readLine();
                     String upvotes = in.readLine();
                     String downvotes = in.readLine();
+                    StringBuilder commentsBuilder = new StringBuilder();
+                    in.mark(1000); // Mark the current position
+                    String line = in.readLine(); // Read the next line
+                    while (line != null && !line.startsWith("Downvotes:") && !line.startsWith("Upvotes:") && !line.startsWith("Image URL:") && !line.startsWith("Title:") && !line.startsWith("Content:")) {
+                        commentsBuilder.append(line).append("\n");
+                        in.mark(1000); // Mark the current position
+                        line = in.readLine(); // Read the next line
+                    }
+                    in.reset();
+                    String comments = commentsBuilder.toString();
+                    System.out.println("Comment: " + comments);
+
+
                     JPanel postPanel = new JPanel();
                     postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
                     postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
@@ -457,6 +470,13 @@ public class ClientGUI {
                     downvotesLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
                     postPanel.add(downvotesLabel);
 
+                    // If there are comments, add them to the post panel
+                    if (!comments.trim().isEmpty()) {
+                        JLabel commentsLabel = new JLabel(comments);
+                        commentsLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Increase the font size
+                        postPanel.add(commentsLabel);
+                    }
+
                     publish(postPanel);
                     i++;
                 }
@@ -464,7 +484,7 @@ public class ClientGUI {
             }
 
             @Override
-            protected void process(java.util.List<JPanel> chunks) {
+            protected void process(List<JPanel> chunks) {
                 for (JPanel panel : chunks) {
                     newsFeedPanel.add(panel);
                 }

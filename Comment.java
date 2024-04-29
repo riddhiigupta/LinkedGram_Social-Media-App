@@ -14,6 +14,7 @@ public class Comment extends Post implements CommentRequirements {
     private boolean hidden;
     private Post post;
 
+
     public Comment(Post post, String content, String author, boolean hidden, int upvotes, int downvotes) throws CommentIncompleteException, PostIncompleteException {
         super(post.getTitle(), post.getContent(), post.getAuthor(), post.isHidden(), post.getImageURL(), post.getUpvotes(), post.getDownvotes());
         this.content = content;
