@@ -274,75 +274,23 @@ public class ClientGUI {
     }
 
     private void commentOnPost() {
-        String username = JOptionPane.showInputDialog(frame, "Enter username to search posts:");
-        if (username != null && !username.isEmpty()) {
-            new SwingWorker<Void, JPanel>() {
-                @Override
-                protected Void doInBackground() throws Exception {
-
-                    out.println("COMMENT_ON_POST");
-                    out.println(username);
-                    String response;
-
-                    try {
-                        while ((response = in.readLine()) != null) {
-                            System.out.println("1");
-                            String title = response;
-                            String content = in.readLine();
-                            String author = in.readLine();
-                            String imageURL = in.readLine();
-                            String upvotes = in.readLine();
-                            String downvotes = in.readLine();
-
-                            System.out.println("2");
-
-                            JPanel postPanel = new JPanel();
-                            postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-                            postPanel.setBorder(BorderFactory.createTitledBorder(title + " by " + author));
-                            postPanel.add(new JLabel("Content: " + content));
-                            if (!imageURL.isEmpty()) {
-                                postPanel.add(new JLabel("Image URL: " + imageURL));
-                            }
-                            postPanel.add(new JLabel("Upvotes: " + upvotes));
-                            postPanel.add(new JLabel("Downvotes: " + downvotes));
-
-                            System.out.println("3");
-                            JButton commentButton = new JButton("Comment");
-                            commentButton.addActionListener(e -> {
-                                String comment = JOptionPane.showInputDialog(frame, "Enter your comment:");
-                                if (comment != null && !comment.isEmpty()) {
-                                    out.println("ADD_COMMENT");
-                                    out.println(title);
-                                    out.println(loggedInUser);
-                                    out.println(comment);
-                                }
-                            });
-                            postPanel.add(commentButton);
-
-                            publish(postPanel);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
+        String postTitle = JOptionPane.showInputDialog(frame, "Enter the title of the post you want to comment on:");
+        String commentContent = JOptionPane.showInputDialog(frame, "Enter your comment:");
+        if (postTitle != null && !postTitle.isEmpty() && commentContent != null && !commentContent.isEmpty()) {
+            out.println("COMMENT_ON_POST");
+            out.println(postTitle);
+            out.println(loggedInUser);
+            out.println(commentContent);
+            try {
+                String response = in.readLine();
+                if ("Comment added successfully!".equals(response)) {
+                    JOptionPane.showMessageDialog(frame, "Comment added successfully!");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Failed to add comment: " + response);
                 }
-
-                @Override
-                protected void process(List<JPanel> chunks) {
-                    for (JPanel panel : chunks) {
-                        frame.getContentPane().add(panel);
-                    }
-                    frame.revalidate(); // 在修改 UI 后调用 revalidate 和 repaint 是一个好习惯
-                    frame.repaint();
-                }
-
-
-                @Override
-                protected void done() {
-                    frame.revalidate();
-                    frame.repaint();
-                }
-            }.execute();
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(frame, "Error adding comment: " + ioException.getMessage());
+            }
         }
     }
 

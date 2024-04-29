@@ -198,8 +198,20 @@ public class Client {
 
 
 
-    private static void commentOnPost() throws IOException, PostIncompleteException {
-
+    private static void commentOnPost() throws IOException {
+        System.out.println("Enter the username whose post you want to comment on: ");
+        String postAuthor = scanner.nextLine();
+        System.out.println("Enter the title of the post you want to comment on: ");
+        String postTitle = scanner.nextLine();
+        System.out.println("Enter your comment: ");
+        String comment = scanner.nextLine();
+        out.println("COMMENT_ON_POST");
+        out.println(postAuthor);
+        out.println(postTitle);
+        out.println(loggedInUser);
+        out.println(comment);
+        String response = in.readLine();
+        System.out.println(response);
     }
 
     private static void handleLogout() {

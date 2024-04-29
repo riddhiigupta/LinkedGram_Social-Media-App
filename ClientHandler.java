@@ -232,22 +232,28 @@ public class ClientHandler implements Runnable {
 
     private String handleCommentOnPost() throws IOException {
         String postTitle = bufferedReader.readLine();
-        String commentContent = bufferedReader.readLine();
         String commentAuthor = bufferedReader.readLine();
-        for (NewsFeed newsFeed : newsFeeds) {
-            Post post = newsFeed.getPost(postTitle);
-            if (post != null) {
-                try {
-                    post.addComment(commentAuthor, commentContent);
-                    System.out.println("Comment added successfully!");
-                    return "Comment added successfully!";
+        String commentContent = bufferedReader.readLine();
 
-                } catch (PostIncompleteException | CommentIncompleteException e) {
-                    return "Error adding comment: " + e.getMessage();
-                }
+        List<String> lines = Files.readAllLines(Paths.get("posts.txt"));
+        boolean postFound = false;
+
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            String[] parts = line.split(";");
+            if (parts[0].equals(postTitle)) {
+                postFound = true;
+                int commentsIndex = parts.length - 1; // Get the index of comments
+                String comments = parts[commentsIndex]; // Get the existing comments
+                comments += ";" + commentAuthor + ":" + commentContent; // Append the new comment
+                parts[commentsIndex] = comments; // Update comments
+                lines.set(i, String.join(";", parts)); // Update the line in the list
+                Files.write(Paths.get("posts.txt"), lines); // Write updated lines back to the file
+                break;
             }
         }
-        return "Post not found!";
+
+        return postFound ? "Comment added successfully!" : "Post not found!";
     }
 
     // Inside the ClientHandler class
