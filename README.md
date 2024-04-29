@@ -2,8 +2,7 @@
 
 ## Distribution:
 - **Riddhi Gupta**: Submitted Report on Brightspace.
-- **Dong Wang**: Submitted Vocareum workspace.
-- 
+- **Dong Wang**: Submitted Vocareum workspace / Presentation
 ## How to run the program:
 - **Note**: There are four main function: Create Post, Comment on Post, Search User, and Create Profile. You can only choose to run one of the functions at a time due to the communication issue between client and server. If you want to run another function, you need to restart the program.
 - **route1**: Register a new account and create a profile. After registration, you will be redirected to the one of the main functions: Create Profile
