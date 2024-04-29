@@ -1,10 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,6 +191,22 @@ public class ClientGUI {
         frame.repaint();
     }
 
+    private void removeTrailingNewline(String filename) throws IOException {
+        RandomAccessFile file = new RandomAccessFile(filename, "rw");
+        long length = file.length();
+        if (length != 0) {
+            do {
+                length -= 1;
+                file.seek(length);
+                byte b = file.readByte();
+                if (b != 10 && b != 13) {
+                    file.setLength(length + 1);
+                    break;
+                }
+            } while (length > 0);
+        }
+        file.close();
+    }
 
     private void createPostGUI() {
         // Clear the existing UI and set up a new one for creating a post
@@ -240,7 +253,9 @@ public class ClientGUI {
             out.println(newPost.getContent());
             out.println(newPost.getAuthor());
             out.println(newPost.getImageURL());
+            out.println();
             try {
+                removeTrailingNewline("posts.txt");
                 String response = in.readLine();
                 if ("Post created successfully!".equals(response)) {
                     JOptionPane.showMessageDialog(frame, "Post created successfully!");

@@ -1,6 +1,6 @@
-About: 1
-Experience: 1
-Education: 1
-Awards: 1
-Skills: 1
-Status: 1
+About: I take CS 180 during 2024 Spring
+Experience: I take CS 180
+Education: Purdue
+Awards: Pass CS 180
+Skills: Java
+Status: Good
