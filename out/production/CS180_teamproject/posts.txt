@@ -1,2 +1,1 @@
-Test;This is a test post;wang;No image;0;0;false
-CS 180;CS 180 is so hard!;wang;No image;0;0;false
+

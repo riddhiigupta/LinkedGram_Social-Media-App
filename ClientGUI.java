@@ -394,17 +394,25 @@ public class ClientGUI {
                 if (response.startsWith("User profile not found")) {
                     JOptionPane.showMessageDialog(frame, response);
                 } else {
-                    // Split the response into different parts
-                    String[] profileParts = response.split("\n");
-                    System.out.println(Arrays.toString(profileParts));
                     StringBuilder profileInfo = new StringBuilder();
-                    profileInfo.append("Username: ").append(profileParts[0]).append("\n");
-                    profileInfo.append("About: ").append(profileParts[1]).append("\n");
-                    profileInfo.append("Experience: ").append(profileParts[2]).append("\n");
-                    profileInfo.append("Education: ").append(profileParts[3]).append("\n");
-                    profileInfo.append("Awards: ").append(profileParts[4]).append("\n");
-                    profileInfo.append("Skills: ").append(profileParts[5]).append("\n");
-                    profileInfo.append("Status: ").append(profileParts[6]).append("\n");
+                    String existingProfile = in.readLine();
+                    String education = in.readLine();
+                    String awards = in.readLine();
+                    String skills = in.readLine();
+                    String status = in.readLine();
+
+                    // Check for extra newline
+                    while (in.ready()) {
+                        in.readLine();
+                    }
+
+                    profileInfo.append("Username: ").append(usernameToSearch).append("\n");
+                    profileInfo.append(response).append("\n");
+                    profileInfo.append(existingProfile).append("\n");
+                    profileInfo.append(education).append("\n");
+                    profileInfo.append(awards).append("\n");
+                    profileInfo.append(skills).append("\n");
+                    profileInfo.append(status).append("\n");
                     JOptionPane.showMessageDialog(frame, "User profile for " + usernameToSearch + ":\n" + profileInfo.toString());
                 }
             } catch (IOException ioException) {
