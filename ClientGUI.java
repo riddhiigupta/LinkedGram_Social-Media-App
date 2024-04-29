@@ -376,7 +376,50 @@ public class ClientGUI {
                     profileInfo.append(awards).append("\n");
                     profileInfo.append(skills).append("\n");
                     profileInfo.append(status).append("\n");
-                    JOptionPane.showMessageDialog(frame, "User profile for " + usernameToSearch + ":\n" + profileInfo.toString());
+
+                    // Load the image
+                    ImageIcon imageIcon = new ImageIcon("boilermaker!.svg.png");
+                    Image image = imageIcon.getImage(); // transform it into Image
+                    Image newImage = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                    imageIcon = new ImageIcon(newImage);  // transform it back to ImageIcon
+                    JLabel imageLabel = new JLabel(imageIcon);
+                    imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
+
+                    // Create a panel to hold the image and text
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    panel.add(imageLabel);
+
+                    // Create a label for each piece of profile info and center it
+                    JLabel usernameLabel = new JLabel("Username: " + usernameToSearch);
+                    usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(usernameLabel);
+
+                    JLabel responseLabel = new JLabel(response);
+                    responseLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(responseLabel);
+
+                    JLabel existingProfileLabel = new JLabel(existingProfile);
+                    existingProfileLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(existingProfileLabel);
+
+                    JLabel educationLabel = new JLabel(education);
+                    educationLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(educationLabel);
+
+                    JLabel awardsLabel = new JLabel(awards);
+                    awardsLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(awardsLabel);
+
+                    JLabel skillsLabel = new JLabel(skills);
+                    skillsLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(skillsLabel);
+
+                    JLabel statusLabel = new JLabel(status);
+                    statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+                    panel.add(statusLabel);
+
+                    JOptionPane.showMessageDialog(frame, panel, "User profile for " + usernameToSearch, JOptionPane.PLAIN_MESSAGE);
                 }
             } catch (IOException ioException) {
                 JOptionPane.showMessageDialog(frame, "Error searching user: " + ioException.getMessage());
