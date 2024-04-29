@@ -43,6 +43,7 @@ public class Post implements PostRequirements {
             this.imageURL = "No image";
         }
     }
+
     public Post(String title, String content, String author, boolean hidden, String imageURL, int upvotes, int downvotes) throws PostIncompleteException {
         this.title = title;
         this.content = content;

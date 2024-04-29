@@ -6,6 +6,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class PostFileManager {
     private static final String POSTS_FILE = "posts.txt";
 
@@ -41,17 +49,17 @@ public class PostFileManager {
 
     private static Post stringToPost(String line) throws PostIncompleteException {
         String[] parts = line.split(";|:");
-        if(parts.length  ==6) {
+        if (parts.length == 6) {
             return new Post(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[6]), parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
         }
         // Assuming format is: title;content;author;imageURL;upvotes;downvotes;hidden
         StringBuilder sb = new StringBuilder();
-        for(int i = 7; i < parts.length; i++) {
-            if(i % 2 != 0 && i+1 < parts.length) {
-                sb.append(parts[i+1]);
+        for (int i = 7; i < parts.length; i++) {
+            if (i % 2 != 0 && i + 1 < parts.length) {
+                sb.append(parts[i + 1]);
                 sb.append("  --");
             }
-            if(i < parts.length - 1) {
+            if (i < parts.length - 1) {
                 sb.append(parts[i]);
                 sb.append("  |  ");
             }
@@ -63,9 +71,9 @@ public class PostFileManager {
             if (sb.charAt(i) == '|') {
                 count++;
                 if (count % 2 == 1) {
-                    result.append(sb.substring(start, i+1));
+                    result.append(sb.substring(start, i + 1));
                 } else {
-                    start = i+1;
+                    start = i + 1;
                 }
             }
         }

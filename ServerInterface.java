@@ -1,5 +1,6 @@
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
+
 /**
  * A program Team Project
  *
@@ -10,6 +11,7 @@ import java.util.concurrent.ExecutorService;
  */
 public interface ServerInterface extends Runnable {
     public ServerSocket getServerSocket();
+
     public ExecutorService getExecutorService();
 
 }

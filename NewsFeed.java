@@ -48,7 +48,7 @@ public class NewsFeed {
         return owner;
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder newsFeed = new StringBuilder();
         for (Post post : postList) {
             newsFeed.append(post.toString()).append("\n");

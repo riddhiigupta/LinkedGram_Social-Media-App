@@ -2,6 +2,14 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class UserCredentials {
     private static final String FILE_NAME = "user_credentials.txt";
     private static Map<String, String> credentials = new HashMap<>();

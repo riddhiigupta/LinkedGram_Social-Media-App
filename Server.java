@@ -6,6 +6,14 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class Server implements Runnable {
     private static final int PORT = 8081;
     private ServerSocket serverSocket;

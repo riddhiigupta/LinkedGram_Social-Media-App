@@ -1,6 +1,14 @@
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class Profile implements Serializable {
     private static final long serialVersionUID = 1L;
     private String about;
@@ -199,7 +207,7 @@ public class Profile implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     @Override
     public String toString() {
         return "About: " + about + "\nExperience: " + experience.toString() + "\nEducation: " + education + "\nAwards: " + awards + "\nSkills: " + skills + "\nStatus: " + status;

@@ -3,6 +3,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class Client {
     private static final String HOST = "localhost";
     private static final int PORT = 8081;
@@ -117,7 +125,6 @@ public class Client {
     }
 
 
-
     private static void showSocialMediaMenu() throws IOException, PostIncompleteException {
         String choice;
         do {
@@ -187,6 +194,7 @@ public class Client {
         String response = in.readLine();
         System.out.println(response);
     }
+
     private static void searchUser() throws IOException {
         System.out.println("Enter the username to search for: ");
         String username = scanner.nextLine();
@@ -195,7 +203,6 @@ public class Client {
         String response = in.readLine();
         System.out.println(response);
     }
-
 
 
     private static void commentOnPost() throws IOException {
@@ -281,8 +288,6 @@ public class Client {
     }
 
 
-
-
     private static void viewNewsFeed() throws IOException, PostIncompleteException {
         out.println("VIEW_NEWS_FEED"); // Send request to the server to retrieve the news feed
         String newsFeedResponse;
@@ -294,7 +299,8 @@ public class Client {
             if (newsFeedResponse.isEmpty()) {
                 consecutiveEmptyLines++;
                 if (consecutiveEmptyLines == 2) {
-                    System.out.println("\n");;
+                    System.out.println("\n");
+                    ;
                 }
                 if (consecutiveEmptyLines > 2) {
                     isNewsFeedEnded = true;

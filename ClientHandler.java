@@ -8,7 +8,14 @@ import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class ClientHandler implements Runnable {
     private Socket clientSocket;
     private BufferedReader bufferedReader;
@@ -176,8 +183,6 @@ public class ClientHandler implements Runnable {
     }
 
 
-
-
     private synchronized String handleUpvotePost() throws IOException {
         String postTitle = bufferedReader.readLine().trim(); // Read the title and remove leading/trailing whitespace
         List<String> lines = Files.readAllLines(Paths.get("posts.txt"));
@@ -272,8 +277,6 @@ public class ClientHandler implements Runnable {
             return "User profile not found for username " + usernameToSearch;
         }
     }
-
-
 
 
 }

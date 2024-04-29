@@ -7,6 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A program Team Project
+ *
+ * <p>Purdue University -- CS18000 -- Spring 2024 -- Team Project-- </p>
+ *
+ * @author Purdue CS
+ * @version Mar 31, 2024
+ */
 public class ClientGUI {
     JFrame frame;
     private JTextField usernameField;
@@ -57,7 +65,7 @@ public class ClientGUI {
         int newWidth = 200; // This can be any value you want
         int newHeight = (newWidth * originalHeight) / originalWidth; // Keep the aspect ratio
 
-        Image newImage = image.getScaledInstance(newWidth, newHeight,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newImage = image.getScaledInstance(newWidth, newHeight, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         imageIcon = new ImageIcon(newImage);  // transform it back to ImageIcon
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(imageIcon);
@@ -240,7 +248,7 @@ public class ClientGUI {
             String title = titleField.getText();
             String content = contentField.getText();
             String imageURL = imageURLField.getText();
-            if(imageURL.isEmpty()) {
+            if (imageURL.isEmpty()) {
                 imageURL = "No image";
             }
             Post newPost;
@@ -393,7 +401,7 @@ public class ClientGUI {
 
 
                     Image image = imageIcon.getImage(); // transform it into Image
-                    Image newImage = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                    Image newImage = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newImage);  // transform it back to ImageIcon
                     JLabel imageLabel = new JLabel(imageIcon);
                     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
@@ -439,6 +447,7 @@ public class ClientGUI {
             }
         }
     }
+
     private void upvotePost() {
         // Implementation to upvote post
         JOptionPane.showMessageDialog(frame, "Upvoting post...");
@@ -574,6 +583,7 @@ public class ClientGUI {
         frame.revalidate();
         frame.repaint();
     }
+
     public static void main(String[] args) {
         new ClientGUI();
     }
