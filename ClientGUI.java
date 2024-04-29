@@ -501,6 +501,12 @@ public class ClientGUI {
                 frame.repaint();
             }
         }.execute();
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> showSocialMediaMenu());
+        newsFeedPanel.add(backButton);
+
+        frame.revalidate();
+        frame.repaint();
     }
 
     public void updateNewsFeed(String postDetails) {
